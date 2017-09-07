@@ -1,0 +1,13 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using AuthWithRoles.Models
+
+@inject SignInManager<ApplicationUser> SignInManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    if (User.IsInRole("Admin"))
+    {
+        <li><a asp-area="" asp-controller="Admin" asp-action="Index">Admin</a></li>
+    }
+
+}
