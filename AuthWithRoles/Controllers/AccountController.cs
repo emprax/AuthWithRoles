@@ -222,8 +222,11 @@ namespace AuthWithRoles.Controllers
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await _userManager.CreateAsync(user, model.Password);
+
                 if (result.Succeeded)
                 {
+                    // Adding user to default role - Member
+                    await _userManager.AddToRoleAsync(user, "Member");
                     _logger.LogInformation("User created a new account with password.");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);

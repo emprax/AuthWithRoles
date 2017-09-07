@@ -17,7 +17,7 @@ namespace AuthWithRoles.Data
         {
             context.Database.EnsureCreated();
             var RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-            string[] roleNames = { "Admin", "Manager", "Member" };
+            string[] roleNames = { "Admin", "Member" };
             IdentityResult roleResult;
 
             foreach (var roleName in roleNames)
@@ -34,9 +34,9 @@ namespace AuthWithRoles.Data
             .AddJsonFile("appsettings.json")
             .Build();
 
-            var UserManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
-            
-            var _user = await UserManager.FindByEmailAsync(config.GetSection("AppSettings")["UserEmail"]);
+            var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+
+            var _user = await userManager.FindByEmailAsync(config.GetSection("AppSettings")["UserEmail"]);
 
             if (_user == null)
             {
@@ -48,10 +48,10 @@ namespace AuthWithRoles.Data
 
                 string UserPassword = config.GetSection("AppSettings")["UserPassword"];
 
-                var createPowerUser = await UserManager.CreateAsync(poweruser, UserPassword);
+                var createPowerUser = await userManager.CreateAsync(poweruser, UserPassword);
                 if (createPowerUser.Succeeded)
                 {
-                    await UserManager.AddToRoleAsync(poweruser, "Admin");
+                    await userManager.AddToRoleAsync(poweruser, "Admin");
                 }
             }
         }
