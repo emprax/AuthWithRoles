@@ -2,9 +2,10 @@
 @using AuthWithRoles.Models
 
 @inject SignInManager<ApplicationUser> SignInManager
-
+// is the current user authenticated?
 @if (SignInManager.IsSignedIn(User))
 {
+    // is the current user authorized to see the next part of the page?
     if (User.IsInRole("Admin"))
     {
         <li><a asp-area="" asp-controller="Admin" asp-action="Index">Admin</a></li>

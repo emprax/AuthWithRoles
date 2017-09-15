@@ -225,7 +225,7 @@ namespace AuthWithRoles.Controllers
 
                 if (result.Succeeded)
                 {
-                    // Adding user to default role - Member
+                    // Adding user to default "Member" role
                     await _userManager.AddToRoleAsync(user, "Member");
                     _logger.LogInformation("User created a new account with password.");
 
